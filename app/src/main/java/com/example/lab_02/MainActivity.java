@@ -23,37 +23,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public static void main(String[] args) {
-        Note note1 = new Note();
-        Note note2 = new Note();
-        Note note3 = new Note();
+        //สร้าง NormalUser
+        NormalUser normalUser = new NormalUser("Gummi", "10111101", "1234@gmail.com");
+        //สร้าง Admon
+        Admin admin = new Admin("Jamie", "1305", "Jamie@gmail.com");
+        TextNote textNote1 = new TextNote();
 
-        User user1 = new User();
-        User user2 = new User();
-        User user3 = new User();
+        textNote1.title ="OOP homework";
+        textNote1.setTextContent ("Do Lab and sent in the google classroom");
+        textNote1.createdDate = ("31 July 2025");
+        textNote1.getSummary();
 
-        note1.title = "lab 01 ";
-        note1.context = "info lab 01";
-        note1.createdDate = "2025.1.17";
+        System.out.println("User: " + normalUser.getUserName());
+        System.out.println("User Type: " + normalUser.getUserType());
+        System.out.println("Role: " + normalUser.getRole());
+        System.out.println("--------------------");
 
-        note2.title = "lab 02";
-        note2.context = "info lab 02";
-        note2.createdDate = "2025.2.15";
+        System.out.println("User: " + Admin.getUserName());
+        System.out.println("User Type: " + admin.getUserType());
+        System.out.println("Role: " + admin.getRole());
+        admin.manageUser();
+        System.out.println("--------------------");
 
-        note3.title = "lab 03";
-        note3.context = "info lab 03";
-        note3.createdDate = "2024.12.9";
 
-        user1.userName = "Gummi";
-        user1.password = "11234GGs";
-        user1.gmail = "1234@email.com";
-
-        user2.userName =  " Jamie";
-        user2.password = "2134hgf";
-        user2.gmail = "Jamie13@gmail.com";
-
-        user3.userName = "Gummie";
-        user3.password = "545467gif";
-        user3.gmail = "arainear@email.com";
 
     }
 }

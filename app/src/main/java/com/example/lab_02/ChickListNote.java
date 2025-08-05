@@ -1,7 +1,5 @@
 package com.example.lab_02;
 
-import android.util.Size;
-
 import java.util.List;
 
 public class ChickListNote extends Note{
@@ -18,7 +16,7 @@ public void setItems(List<String> items) {
 }
 
 
-    public String getSummary(){
+    public void getSummary(){
         // String strItems = //loop for get data from list
         StringBuilder strItem = new StringBuilder();
         if (items != null && items.isEmpty() ) {
@@ -31,10 +29,6 @@ public void setItems(List<String> items) {
         }  else{
                 strItem.append("No Items");
             }
-
-            String title = ("Your Title");
-            String createdate = ("Your Date");
-            return title + ":" + strItem.toString() + "(" + createdDate + ")" ;
         }
 
         // return title+":"+strItems+"("+createdDate+")";

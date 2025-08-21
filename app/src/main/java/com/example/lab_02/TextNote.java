@@ -10,8 +10,9 @@ public class TextNote extends Note{
 
     }
 
-    public void getSummary() {
+    public String getSummary() {
         //System.out.println(title+":"textContennt+"("+createdDate+")";
 
+        return String.format("%s: %s (%s)", title, textContent, createdDate);
     }
 }

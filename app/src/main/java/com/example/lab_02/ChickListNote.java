@@ -16,7 +16,7 @@ public void setItems(List<String> items) {
 }
 
 
-    public void getSummary(){
+    public CharSequence getSummary(){
         // String strItems = //loop for get data from list
         StringBuilder strItem = new StringBuilder();
         if (items != null && items.isEmpty() ) {
@@ -29,7 +29,8 @@ public void setItems(List<String> items) {
         }  else{
                 strItem.append("No Items");
             }
-        }
+        return null;
+    }
 
         // return title+":"+strItems+"("+createdDate+")";
 

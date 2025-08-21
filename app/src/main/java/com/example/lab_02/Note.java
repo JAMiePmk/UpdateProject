@@ -6,10 +6,16 @@ public class Note {
     String context;
     String createdDate;
 
-    void getSummary() {
+
+    public String getTitle() {
+        return title;
+    }
+
+    CharSequence getSummary() {
         System.out.println(title);
         System.out.println(context);
         System.out.println(createdDate);
+        return null;
     }
 
     public abstract static class note {

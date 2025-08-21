@@ -1,7 +1,11 @@
 package com.example.lab_02;
 
-public abstract class User {
-    private static String userName;
+import android.content.Intent;
+
+import java.io.Serializable;
+
+public abstract class User implements Serializable {
+    private  String userName;
     private String password;
     private String gmail;
     private UserType userType;
@@ -19,7 +23,7 @@ public abstract class User {
         return userType;
     }
 
-    public static String getUserName(){
+    public  String getUserName(){
         return userName;
     }
 
@@ -42,5 +46,12 @@ public abstract class User {
     }
 
     public abstract String getRole();
+
+    NormalUser user1 = new NormalUser("Gummi", "6712247049", "1234@gmail.com");
+
+    public String getuserName() {
+        return String.format("%s", userName);
+    }
+
 
 }

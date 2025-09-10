@@ -1,19 +1,19 @@
 package com.example.lab_02;
 
 
+import java.util.Date;
+
 public class Note {
     String title;
-    String context;
-    String createdDate;
-
-
+    String content;
+    Date createdDate;
     public String getTitle() {
         return title;
     }
 
     CharSequence getSummary() {
         System.out.println(title);
-        System.out.println(context);
+        System.out.println(content);
         System.out.println(createdDate);
         return null;
     }

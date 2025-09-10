@@ -1,6 +1,9 @@
 package com.example.lab_02;
 
+import static java.util.concurrent.Executor.*;
+
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,7 +17,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+
 import java.util.Date;
+import java.util.concurrent.Executor;
 
 public class AddNoteActivity extends AppCompatActivity {
 
@@ -59,24 +64,30 @@ public class AddNoteActivity extends AppCompatActivity {
                 String strOfName = Name.getText().toString();
                 String strOfTitle = title.getText().toString();
                 String strOfContent = content.getText().toString();
-                String strOfdate = new Date().toString();
+                Date date = new Date();
 
                 //set data to textnote
 
                 Name.setText(strOfName);
 
+                TextNote note1 = new TextNote(null, null, null);
+                note1.title = strOfTitle;
 
-                TextNote note1 = new TextNote();
-               note1.title = strOfTitle;
+                note1.setTextContent(strOfContent);
 
-               note1.setTextContent(strOfContent);
+                note1.createdDate = date;
 
-               note1.createdDate = strOfdate;
-
-               //show note on display
-                String Display = Name.getText().toString() + " : " + note1.getSummary() ;
+                //show note on display
+                String Display = Name.getText().toString() + " : " + note1.getSummary();
                 display.setText(Display);
 
+                NoteEntity entity = NoteMapper.toEntity(note1);
+
+                Context context = getApplicationContext();
+                java.util.concurrent.Executors.newSingleThreadExecutor().execute(() -> {
+                    AppDatabase db = AppDatabase.getInstance(context);
+                    db.noteDao().insert(entity);
+                });
 
             }
 

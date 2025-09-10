@@ -1,8 +1,9 @@
 package com.example.lab_02;
 
+import java.util.Date;
 import java.util.List;
 
-public class ChickListNote extends Note{
+public class CheckListNote extends Note{
     private List<String> items;
 
     //getter

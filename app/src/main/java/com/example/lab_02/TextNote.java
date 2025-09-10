@@ -1,7 +1,14 @@
 package com.example.lab_02;
 
+import java.util.Date;
+
 public class TextNote extends Note{
     private String textContent;
+
+    public TextNote(String title, Date createdDate, String content) {
+        super();
+    }
+
     public String getTextContent(){
         return textContent;
     }

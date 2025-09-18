@@ -13,10 +13,20 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.Executors;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class BrowseNoteActivity extends AppCompatActivity {
     Button Backbutton,Searchbutton;
     ProgressBar progressBar;
-    TextView display;
+    TextView display,showNote,showNoteForAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +47,55 @@ public class BrowseNoteActivity extends AppCompatActivity {
                startActivity(MainActivity);
            }
        });
+
+       showNote = findViewById(R.id.textView5);
+       showNoteForAPI = findViewById(R.id.textView6);
+
+       Executors.newSingleThreadExecutor().execute(() -> {
+                   List<NoteEntity> entities = AppDatabase.getInstance(this).noteDao().getAll();
+                   List<Note> notes = new ArrayList<>();
+                   for (NoteEntity e : entities) {
+                       notes.add(NoteMapper.fromEntity(e));
+                   }
+
+                   runOnUiThread(() -> {
+                       StringBuilder sb = new StringBuilder();
+                       for (Note n : notes) {
+                           sb.append(n.getSummary()).append("\n");
+                       }
+                       showNote.setText(sb.toString());
+                   });
+               });
+
+       Retrofit retrofit = new Retrofit.Builder()
+               .baseUrl("https://jsonplaceholder.typicode.com/")
+               .addConverterFactory(GsonConverterFactory.create())
+               .build();
+       ApiService apiService = retrofit.create(ApiService.class);
+       Call<List<TextNote>> call = apiService.getTextNote();
+
+       call.enqueue(new Callback<List<TextNote>>() {
+                   @Override
+                   public void onResponse(Call<List<TextNote>> call, Response<List<TextNote>> response) {
+                       if (!response.isSuccessful()) {
+                          showNoteForAPI.setText("Error Code: " + response.code());
+                          return;
+
+                       }
+                   List<TextNote> notes = response.body();
+                       StringBuilder builder = new StringBuilder();
+                       for (TextNote n : notes) {
+                           builder.append("Title: ").append(n.getTitle()).append("\n")
+                                   .append("body: ").append(n.getTextContent()).append("\n\n");
+                       }
+                       showNoteForAPI.setText(builder.toString());
+                   }
+                   @Override
+                   public void onFailure(Call<List<TextNote>> call, Throwable t) {
+                       showNoteForAPI.setText("Error: " + t.getMessage());
+                   }
+       });
+
 
        Searchbutton = findViewById(R.id.button6);
        progressBar = findViewById(R.id.progressBar2);
